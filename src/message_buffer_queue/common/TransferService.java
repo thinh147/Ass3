@@ -5,31 +5,26 @@ import message_buffer_queue.custom.CustomStack;
 import message_buffer_queue.model.SharedData;
 
 public class TransferService {
-    public synchronized CustomStack<SharedData> produce(SharedData message){
-        CustomStack<SharedData> customStack = new CustomStack<>(10);
-        if(customStack.isFull()){
+    public synchronized void produce(CustomQueue<SharedData> message){
+        if(message.isFull()){
             try{
                 this.wait();
             }catch (InterruptedException e){
                 System.out.println("Please wait to the notification!!!");
             }
         }
-        System.out.println("stack push message: " + message);
-        customStack.push(message);
+        System.out.println();
         notify();
-        return customStack;
     }
 
-    public synchronized void consume(SharedData data){
-        CustomQueue<String> message = new CustomQueue<>(10);
-        if(message.isEmpty()){
+    public synchronized void consume(CustomStack<SharedData> data){
+        if(data.isEmpty()){
             try{
                 this.wait();
             }catch (InterruptedException e){
                 System.out.println("Please wait the producer add more messages!!!");
             }
         }
-        message.enqueue(data.getMessage());
         System.out.println();
         notify();
     }
