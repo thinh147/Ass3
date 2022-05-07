@@ -1,5 +1,8 @@
 package message_buffer_queue.custom;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CustomQueue<T> {
     protected T[] data;  // Array based Queue.
     protected int head = 0; // Index location of the "front" element.
@@ -67,5 +70,15 @@ public class CustomQueue<T> {
         }
     }
 
+    @Override
+    public String toString(){
+        List<T> req = Arrays.asList(data);
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i<req.size()-1; i++){
+            builder.append(req.get(i)).append("->");
+        }
+        builder.append(req.get(req.size()-1));
+        return builder.toString();
+    }
 
 }

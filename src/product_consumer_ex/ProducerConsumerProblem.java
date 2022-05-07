@@ -16,11 +16,11 @@ public class ProducerConsumerProblem {
         prod.start();
         cons.start();
 
-        // Wait for the threads to finish
-//    try {
-//    	prod.join();
-//    	cons.join();
-//    } catch (InterruptedException e) {return;}
+//         Wait for the threads to finish
+    try {
+    	prod.join();
+    	cons.join();
+    } catch (InterruptedException e) {return;}
     }
 
 }

@@ -1,5 +1,8 @@
 package message_buffer_queue.custom;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CustomStack<T> {
     protected T[] data;
     protected int topIndexLocation;
@@ -45,5 +48,16 @@ public class CustomStack<T> {
 
     public int size() {
         return topIndexLocation + 1;
+    }
+
+    @Override
+    public String toString(){
+        List<T> req = Arrays.asList(data);
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i<req.size()-1; i++){
+            builder.append(req.get(i)).append("->");
+        }
+        builder.append(req.get(req.size()-1));
+        return builder.toString();
     }
 }
