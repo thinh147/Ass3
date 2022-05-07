@@ -6,22 +6,27 @@ import message_buffer_queue.custom.CustomStack;
 
 import java.util.Scanner;
 
-public class Producer extends Thread{
+public class Producer extends Thread {
     TransferService transferService;
     private static final Scanner sc = new Scanner(System.in);
-    public Producer(TransferService transferService){
+
+    public Producer(TransferService transferService) {
         this.transferService = transferService;
         this.start();
     }
-    public void run(){
+
+    public void run() {
         CustomStack<SharedData> messageStack = new CustomStack<>(10);
-        if(messageStack.isFull()) System.out.println("Please wait until all messages in the store push!");
+        if (messageStack.isFull()) System.out.println("Please wait until all messages in the store push!");
 
-        SharedData sharedData = new SharedData();
-        String message = sc.nextLine();
-        sharedData.setMessage(message);
-        messageStack.push(sharedData);
+        for (int i = 0; i < 10; i++) {
+            SharedData sharedData = new SharedData();
+            System.out.println("INPUT MESSAGE: ");
+            String message = sc.nextLine();
+            sharedData.setMessage(message);
+            messageStack.push(sharedData);
 
-        transferService.produce(sharedData);
+            transferService.produce(sharedData);
+        }
     }
 }

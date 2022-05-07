@@ -14,7 +14,7 @@ public class TransferService {
                 System.out.println("Please wait to the notification!!!");
             }
         }
-        System.out.println("stack push message: " + message);
+        System.out.println("stack push message: " + message.getMessage());
         customStack.push(message);
         notify();
         return customStack;
