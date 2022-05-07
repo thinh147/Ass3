@@ -23,7 +23,7 @@ public class Main {
             prod.start();
 
             cons.start();
-            prod.join();
+            cons.join();
         }
 
 //         Wait for the threads to finish
