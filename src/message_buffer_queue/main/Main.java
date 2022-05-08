@@ -17,26 +17,13 @@ public class Main {
         while (queueInput.isEmpty() || queueInput.size() < 10) {
             Thread prod = new Producer(buf, queueInput);
             Thread cons = new Consumer(buf);
-            System.err.println("Input message data: ");
-            String data = sc.nextLine();
 
-            if (data.length() > 250) {
-                System.out.println("Please input any string less than 250 characters!! ");
-                data = sc.nextLine();
-            }
-
-            queueInput.enqueue(data);
-
-            System.err.println("Stack data in present includes: " + queueInput.toString());
-            System.err.println("Queue in present includes: " + queueInput.toString());
 
             prod.start();
             prod.join();
 
             cons.start();
             cons.join();
-
-            if(data.equals("quit")) break;
         }
 
 //         Wait for the threads to finish

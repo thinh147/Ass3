@@ -1,5 +1,6 @@
 package message_buffer_queue.common;
 
+import message_buffer_queue.custom.CustomQueue;
 import message_buffer_queue.custom.CustomStack;
 
 import java.util.Scanner;
@@ -10,13 +11,14 @@ import java.util.Scanner;
 public class Buffer {
     private final CustomStack<String> stack = new CustomStack<>(10);
 
-    public synchronized void put(String message) throws InterruptedException {
+    public synchronized void put(CustomQueue<String> message) throws InterruptedException {
         while (stack.isFull()) {    //wait till the buffer becomes full;
             wait();
         }
-        stack.push(message);
+        System.out.println("Producer: input data..." + message.front());
+        stack.push(message.dequeue());
+        System.err.println("Stack data in present includes: " + stack.toString());
 
-        System.out.println("Producer: input data..." + message);
         notify();
     }
 
@@ -24,8 +26,9 @@ public class Buffer {
         while (stack.isEmpty()) {    //wait till something appears in the buffer
             wait();
         }
-        notify();
-        if(stack.isFull()) stack.pop();
         System.out.println("Consumer: out put data ..." + stack.top());
+        notify();
+        if (stack.isFull())
+            stack.pop();
     }
 }
