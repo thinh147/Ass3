@@ -8,11 +8,11 @@ public class Consumer extends Thread {
     }
 
     public void run() {
-        String value;
         try {
             consBuf.get();
             Thread.sleep((int) (Math.random() * 100));
-        } catch (InterruptedException ignored) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Something wrong with our strace!");
         }
     }
 }

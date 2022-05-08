@@ -11,10 +11,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         Buffer buf = new Buffer();
-        Scanner sc = new Scanner(System.in);
         CustomQueue<String> queueInput = new CustomQueue<>();
 
         while (queueInput.isEmpty() || queueInput.size() < 10) {
+            final long startTime = System.currentTimeMillis();
             Thread prod = new Producer(buf, queueInput);
             Thread cons = new Consumer(buf);
 
@@ -24,6 +24,10 @@ public class Main {
 
             cons.start();
             cons.join();
+
+            final long endTime = System.currentTimeMillis();
+
+            System.out.println(String.format("Total execution time: %s ms", (endTime - startTime)));
         }
 
 //         Wait for the threads to finish
