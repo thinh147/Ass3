@@ -10,12 +10,8 @@ public class Consumer extends Thread {
     public void run() {
         String value;
         try {
-            value = consBuf.get();
-        } catch (InterruptedException e) {
-            return;
-        }
-        try {
-            Thread.sleep((int) (Math.random() * 100)); // sleep for a randomly chosen time
+            consBuf.get();
+            Thread.sleep((int) (Math.random() * 100));
         } catch (InterruptedException ignored) {
         }
     }
