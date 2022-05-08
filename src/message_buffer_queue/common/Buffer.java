@@ -1,43 +1,34 @@
 package message_buffer_queue.common;
 
-import message_buffer_queue.custom.CustomQueue;
+import message_buffer_queue.custom.CustomStack;
 
-import java.util.Scanner;
-
+//Bộ đệm, dùng để trung chuyển data.
+//Sử dụng queue để store message truyền vào
 public class Buffer {
     private String messages;
-    private final CustomQueue<String> queue = new CustomQueue<>();
-    private final Scanner sc = new Scanner(System.in);
+    private final CustomStack<String> stack = new CustomStack<>(10);
 
     public synchronized void put(String message) throws InterruptedException {
-        while (!queue.isEmpty()) {    //wait till the buffer becomes empty
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                throw e;
-            }
+        while (stack.isFull()) {    //wait till the buffer becomes full;
+            wait();
         }
-        messages = message;
-        queue.enqueue(message);
 
-        System.err.println("Queue data in present includes: " + queue.toString());
+        messages = message;
+        stack.push(message);
+
+        System.err.println("Stack data in present includes: " + stack.toString());
         System.out.println("Producer: input data..." + message);
         notify();
     }
 
     public synchronized String get() throws InterruptedException {
-        while (queue.isEmpty()) {    //wait till something appears in the buffer
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                throw e;
-            }
+        while (stack.isEmpty()) {    //wait till something appears in the buffer
+            wait();
         }
         notify();
         String val = messages;
-        StringBuilder builder = new StringBuilder(val);
-        queue.dequeue();
-        System.out.println("Consumer: out put data (reverse string)..." + builder.reverse());
+        stack.pop();
+        System.out.println("Consumer: out put data (reverse string)..." + val);
         return val;
     }
 }

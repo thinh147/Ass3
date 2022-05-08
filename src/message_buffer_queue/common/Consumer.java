@@ -1,5 +1,7 @@
 package message_buffer_queue.common;
 
+
+//Sử dụng messages đã được cung cấp bên Producer
 public class Consumer extends Thread {
     private final Buffer consBuf;
 
@@ -11,11 +13,8 @@ public class Consumer extends Thread {
         String value;
         try {
             value = consBuf.get();
-        } catch (InterruptedException e) {
-            return;
-        }
-        try {
-            Thread.sleep((int) (Math.random() * 100)); // sleep for a randomly chosen time
+
+            Thread.sleep(500);
         } catch (InterruptedException ignored) {
         }
     }
