@@ -35,6 +35,8 @@ public class Main {
 
             cons.start();
             cons.join();
+
+            if(data.equals("quit")) break;
         }
 
 //         Wait for the threads to finish
