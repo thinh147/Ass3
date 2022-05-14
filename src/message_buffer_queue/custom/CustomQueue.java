@@ -12,7 +12,7 @@ public class CustomQueue<T> {
 
     @SuppressWarnings("unchecked")
     public CustomQueue() {
-        data = (T[]) new Object[10]; // if no size given, default is 10
+        data = (T[]) new Object[100000]; // if no size given, default is 10
         tail = data.length - 1;     //9 is the last index
     }
 
